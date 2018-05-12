@@ -84,7 +84,7 @@ class Base extends Controller
      */
 	protected function userOnly()
     {
-        if (!$this->_user) throw new HttpException(403, '未登录或登陆已过期，请重新登陆', NOT_LOGIN);
+        if (!$this->_user) throw new CHttpException(403, '未登录或登陆已过期，请重新登陆', NOT_LOGIN);
         return true;
     }
 }

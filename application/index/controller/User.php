@@ -48,7 +48,7 @@ class User extends Base
                     'password' =>"wx_123456"
                 );
                 $add = $this->_model->data($data)->allowField(true)->save();
-                if(!$add) throw new \Exception('注册失败，请联系管理员');
+                if(!$add) throw new CHttpException(500, '注册失败，请联系管理员');
                 $user = $this->_model
                     ->where('wx_openid', '=', $wxinfo['openid'] )
                     ->find();
@@ -64,16 +64,9 @@ class User extends Base
             ];
             // 包含 token 的用户信息存入 Memcache
             cache($key, serialize($user_info), ['type' => 'Memcache','expire' => ONE_DAY]);
-            echo json_encode(array(
-                'status' => 200,
-                'token' => $token,
-            ));
+            return $token;
         } catch (\Exception $e) {
-            echo json_encode(array(
-                'status' => 500,
-                'info' => $e->getMessage(),
-                'code' => FAIL
-            ));
+            throw new CHttpException(500, $e->getMessage(), FAIL);
         }
 	}
 
