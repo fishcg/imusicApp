@@ -128,7 +128,7 @@ class User extends Base
      */
 	function isfollow()
     {
-		$uid = $this->_user->uid;
+		$uid = $this->_user->uid ?? 0;
 		$music_id = (int)$_GET['music_id'];
 		$to_uid = (int)$_GET['to_uid'];
 		$follow = Db::table('lab_music_user')->where(['uid' => $uid, 'music_id' => $music_id])->count();
