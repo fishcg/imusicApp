@@ -6,7 +6,7 @@ application/config/service.php
 application/constants/key.php
 application/config.php
 application/database.php
-runtime
+runtime/*
 public/images
 public/lrc
 public/resources
