@@ -1,0 +1,84 @@
+# ~form 开头的内容用于指定表单属性
+~form:
+  _subject: "用户"
+  _tips: true
+  _submit: "保存"
+  class: "smart-form"
+
+# 指定字段及过滤器等信息
+
+uid:
+  _ui: hidden
+  _label: "UID"
+
+username:
+  _ui: textbox
+  _filters: ['trim', 'strtolower']
+  _label: "用户帐号"
+  _req: true
+
+name:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "昵称"
+  _req: false
+
+imgcode:
+  _ui: textbox
+  _filters: ['trim', 'strtolower']
+  _label: "验证码"
+
+#zone_id:
+#  _ui: combotree
+# _label: "用户所在地"
+#  url: 'admin::zone/ajaxGetTree'
+#  style: "width:220px"
+#  value: 0
+
+password:
+  _ui: password
+  _label: "密码"
+  _req: true
+  _filters: ['trim']
+  style: 'width:280px;'
+
+roles:
+  _ui: checkboxgroup
+  _label: "角色"
+
+#departments:
+#  _ui: combotree
+#  url: "department/AjaxGetTree"
+#  multiple: true
+#  onlyLeafCheck: true
+#  _label: "所在部门"
+
+mobile:
+  _ui: textbox
+  _label: '联系电话'
+  _filters: ['trim']
+  style: 'width:200px;'
+  
+status:
+  _ui: radiogroup
+  _label: '状态'
+  value: 1
+  items:
+    0: '未启用'
+    1: '正常'
+    -1: '禁止'
+
+last_ip:
+  _ui: hidden
+  _label: '最后登陆IP'
+
+last_time:
+  _ui: hidden
+  _label: '最后登陆时间'
+  datetime: 'Y-m-d H:i:s'
+
+email:
+  _ui: hidden
+
+mobile:
+  _ui: hidden

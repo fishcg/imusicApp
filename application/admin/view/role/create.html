@@ -1,0 +1,98 @@
+<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/personal.css" media="all">
+
+<section class="layui-larry-box">
+	<div class="larry-personal">
+		<header class="larry-personal-tit">
+			<span>新用户信息</span>
+		</header><!-- /header -->
+		<div class="larry-personal-body clearfix">
+			<form class="layui-form col-lg-5" action="{:url("admin/".$sit."/create")}" method="post">
+				<div class="layui-form-item">
+					<label class="layui-form-label">用户名</label>
+					<div class="layui-input-block">  
+						<input type="text" name="name"  autocomplete="off"  class="layui-input" placeholder="请输入用户名"  >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">账号</label>
+					<div class="layui-input-block">
+						<input type="text" name="username"  autocomplete="off" class="layui-input" placeholder="请输入账号" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">密码</label>
+					<div class="layui-input-block">
+						<input type="text" name="password"  autocomplete="off" class="layui-input " placeholder="请输入6位以上密码">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">邮箱</label>
+					<div class="layui-input-block">
+						<input type="text" name="email"  autocomplete="off" class="layui-input" placeholder="请输入邮箱">
+					</div>
+				</div>
+				<!-- <div class="layui-form-item">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-block">
+						<input type="radio" name="sex" value="男" title="男" checked=""><div class="layui-unselect layui-form-radio layui-form-radioed"><i class="layui-anim layui-icon"></i><span>男</span></div>
+						<input type="radio" name="sex" value="女" title="女"><div class="layui-unselect layui-form-radio"><i class="layui-anim layui-icon"></i><span>女</span></div>
+					</div>
+				</div> -->
+				<!-- <div class="layui-form-item">
+					<label class="layui-form-label">修改头像</label>
+					<div class="layui-input-block">
+						<input type="file" name="file" class="layui-upload-file">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">界面语言</label>
+					<div class="layui-input-block">
+						<select name="interest" lay-filter="aihao">
+							<option value=""></option>
+							<option value="0" selected="selected">中文</option>
+							<option value="1">英文</option>
+						</select>
+					</div>
+				</div> -->
+
+				<!-- <div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">座右铭</label>
+					<div class="layui-input-block">
+						<textarea placeholder="既然选择了远方，便只顾风雨兼程；路漫漫其修远兮，吾将上下而求索" value="" class="layui-textarea"></textarea>
+					</div>
+				</div> -->
+				
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn {$sit}" lay-submit lay-filter="formDemo">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</section>
+
+<script type="text/javascript">
+//Demo
+	layui.use('form', function(){
+	  var form = layui.form();
+
+	  //监听提交
+	  form.on('submit(formDemo)', function(data){
+	    //layer.msg(JSON.stringify(data.field));
+	    $.post("{:url("admin/".$sit."/create")}",data.field,function(res){
+	    	if(res.code){
+	    		layer.msg(res.msg);
+	    		$("#finder-{$_request->controller()}-dialog").window('close');
+	    		$("#finder-{$_request->controller()}").datagrid('reload');
+	    	}else{
+	    		layer.alert(res.msg,function(){
+			    	layer.closeAll();
+	    		});
+	    	}
+	    },'json');
+	    return false;
+	  });
+	});
+</script>

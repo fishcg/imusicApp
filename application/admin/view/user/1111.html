@@ -1,0 +1,32 @@
+<script type="text/javascript">
+	layui.use(['jquery','layer','element','laypage'],function(){
+	      window.jQuery = window.$ = layui.jquery;
+	      window.layer = layui.layer;
+          var element = layui.element(),
+          laypage = layui.laypage;
+            
+          laypage({
+          	       //curr:2,
+					cont: 'page',
+					pages: {$count} //总页数
+						,
+					groups: 5 //连续显示分页数
+						,
+					jump: function(obj, first) {
+						//得到了当前页，用于向服务端请求对应数据
+						var curr = obj.curr;
+						$.post(
+							"<?php echo url('admin/user/datalist')?>",
+							{page:curr},
+							function(data){
+								$("#getlist").html(data);
+							},"html"
+						)
+						//alert(obj.curr);
+						if(!first) {
+							//layer.msg('第 '+ obj.curr +' 页');
+						}
+					}
+				});
+    });
+</script>

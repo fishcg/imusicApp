@@ -1,0 +1,13 @@
+{foreach $list as $vo}
+<tr class="data-list-{$sit}{$class}" >
+    <td><input type="checkbox" value="{$vo.uid}"></td>
+    <td>{$vo.uid}  </td>
+      <td>{$vo.name}  </td>
+    <td>{$vo.username}  </td>
+    <td>{php}echo $vo->email?$vo->email:"木有邮箱"{/php}  </td>
+    <td>{php}echo date("Y-m-d",$vo->last_time);{/php}  </td>
+    <td>{$vo.username}  </td>
+    <td>{$vo.username}  </td>
+</tr>
+{/foreach}
+                     

@@ -1,0 +1,81 @@
+{extend name="_layouts/finder_recycle_layout" /}
+
+{block name="title"}首页-{/block}
+
+{block name="css"}
+
+{/block}
+
+{block name="js"}{/block}
+
+{block name="body_class"}{/block}
+
+{block name="content"}
+<section class="layui-larry-box">
+	<div class="larry-personal">
+	    <div class="layui-tab">
+             <!-- anniu-->
+            <div class="larry-separate"></div>
+                <div class="layui-tab-item layui-field-box layui-show">
+                     <table id="data-title" class="layui-table table-hover" lay-even="" lay-skin="nob">
+                          <thead>
+                              <tr>
+                                  <th><input name="all" type="checkbox" id="{$sit}-selected-all-recycle"></th>
+                                  <th>ID</th>
+                                  <th>名字</th>
+                                  <th>账号</th>
+                                  <th>邮箱</th>
+                                  <th>创建时间</th>
+                                  <th>角色</th>
+                                  <th>操作IP</th>
+                              </tr>
+                          </thead>
+                          <tbody id="getlist" class="ajax-{$sit}-recycle">
+                            <!-- 异步的内容 -->
+                          </tbody>
+                     </table>
+                     <div class="larry-table-page shuaxin">
+                          <a href="javascript:;" class="layui-btn layui-btn-small"><i class="iconfont icon-shuaxin"></i>刷新</a>
+				          <div id="page-{$sit}-recycle" class="page"></div>
+			         </div>
+			    </div>
+		</div>
+	</div>
+</section>
+{/block}
+
+{block name="endjs"}
+<script type="text/javascript">
+	layui.use(['jquery','layer','element','laypage'],function(){
+	      window.jQuery = window.$ = layui.jquery;
+	      window.layer = layui.layer;
+          var element = layui.element(),
+          laypage = layui.laypage;   
+          laypage({
+          	       //curr:2,
+					cont: 'page-{$sit}-recycle',
+					pages: {$count} //总页数
+						,
+					groups: 5 //连续显示分页数
+						,
+					jump: function(obj, first) {
+						//得到了当前页，用于向服务端请求对应数据
+						var curr = obj.curr;
+						$.post(
+							'{:url("admin/".$sit."/datalist")}',
+							//"<?php echo url('admin/user/datalist')?>",
+							{sit:"{$sit}",page:curr,recycle:1},
+							function(data){
+								$(".ajax-{$sit}-recycle").html(data);
+							},"html"
+						)
+						$('#{$sit}-selected-all-recycle').removeAttr('checked').removeClass("all");
+						//alert(obj.curr);
+						if(!first) {
+							//layer.msg('第 '+ obj.curr +' 页');
+						}
+					}
+				});
+    });
+</script>
+{/block}

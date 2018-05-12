@@ -1,0 +1,11 @@
+{foreach $list as $vo}
+<tr class="data-list-{$sit}{$class}" >
+    <td><input type="checkbox" value="{$vo.id}"></td>
+    <td>{$vo.id}  </td>
+      <td>{$vo.subject}  </td>
+    <td>{$vo.title}  </td>
+       <td>{$vo.content|mb_substr=0,30,'utf-8'}...</td>
+    <td>{:date("Y-m-d H:i:s",$vo.created)}  </td>
+     <td>{$vo.sort}  </td>
+</tr>
+{/foreach}

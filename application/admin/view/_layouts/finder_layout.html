@@ -1,0 +1,365 @@
+
+<link rel="stylesheet" type="text/css" href="__STATIC__/admin/css/personal.css" media="all">
+{block name="css"}
+
+{/block}
+<script>
+var defaults = {};
+var window_w = '65%';
+var window_h = 'auto';
+var window_rw = '65%';
+var window_rh = '65%';
+</script>
+{block name="js"}{/block}
+<!-- widget grid -->
+
+<blockquote class="layui-elem-quote mylog-info-tit tool-pading">
+    <ul class="layui-tab-title">
+    {if condition="in_array('create',$_cud) eq true"}
+          <a href="javascript:;" class="layui-btn layui-btn-small add-btn add-btn-{$sit}"><i class=" layui-icon">&#xe608;</i> 新增</a>
+	{/if}
+	{if condition="in_array('update',$_cud) eq true"}
+	      <a href="javascript:;" class="layui-btn layui-btn-small edit-btn edit-btn-{$sit}"><i class=" layui-icon">&#xe642;</i>编辑</a>
+	{/if}
+	{if condition="in_array('delete',$_cud) eq true"}
+	      <a href="javascript:;" class="layui-btn layui-btn-small delete-btn delete-btn-{$sit}"><i class=" layui-icon">&#xe640;</i>删除</a>
+	{/if}
+	{if condition="$_recycle eq true"}
+	      <a href="javascript:;" class="layui-btn layui-btn-small  recycle-btn recycle-btn-{$sit}"><i class=" layui-icon">&#xe61d;</i>回收站</a>
+	{/if}
+	{block name="toolbar-tools"}{/block}
+	<a href="javascript:;" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+	      <!-- <a class="layui-btn layui-btn-small larry-log-del"><i class="iconfont icon-huishouzhan1"></i>清空日志</a> -->
+	</ul>
+ </blockquote>
+
+			<!-- 		widget content
+			<div class="widget-body no-padding">
+				<div id="toolbar-{$_request->controller()}" class="finder-toolbar">
+					<div style="margin-bottom:5px">
+					{if condition="in_array('create',$_cud) eq true"}
+						<a href="javascript:;" class="easyui-linkbutton create" iconCls="icon-create" plain="true">新增</a>
+					{/if}
+					{if condition="in_array('update',$_cud) eq true"}
+						<a href="javascript:;" class="easyui-linkbutton update" iconCls="icon-update" plain="true">修改</a>
+					{/if}
+					{if condition="in_array('delete',$_cud) eq true"}
+						<a href="javascript:;" class="easyui-linkbutton delete" iconCls="icon-delete" plain="true">删除</a>
+					{/if}
+					{if condition="$_recycle eq true"}
+						<a href="javascript:;" class="easyui-linkbutton recycle" iconCls="icon-recycle" plain="true">回收站</a>
+					{/if}
+					{block name="toolbar-tools"}{/block}
+					</div>
+					<div>
+						{block name="toolbar-search"}{/block}
+						<a href="javascript:;" class="easyui-linkbutton" iconCls="icon-search">搜索</a>
+					</div>
+				</div>
+			
+			</div> -->
+
+<div id="ajaxinform">
+{block name="content"}{/block}
+</div>
+<div id="finder-{$sit}-dialog" style="display: none;"></div>
+<script>
+var {$sit}_create=-1;
+var {$sit}_recycle=-1;
+layui.use(['jquery','layer','element'],function(){
+	window.jQuery = window.$ = layui.jquery;
+	window.layer = layui.layer;
+  	var element = layui.element();
+	$(function(){
+		if($(".data_title").text()==""){
+
+			$(".data_title").text($(".breadcrumb li:eq(1)").text());
+		}
+	})
+$(function(){
+	$("body").off("click"); 
+	$("body").on("click","#{$sit}-selected-all",function(){
+		if($(this).hasClass('all')){
+			$(this).removeClass("all");
+			$('.data-list-{$sit}').removeClass("datagrid-row-selected");
+		 	$('.data-list-{$sit}').children('td:first-child').find('input').removeAttr('checked')
+
+		}else{
+			$(this).addClass("all");
+			$('.data-list-{$sit}').addClass("datagrid-row-selected");
+	    	$('.data-list-{$sit}').children('td:first-child').find('input').prop('checked','checked')
+		}
+
+	})
+
+	$("body").on("click",".data-list-{$sit}",function(e){
+	    if($(this).hasClass('datagrid-row-selected')){
+	    	$(this).removeClass("datagrid-row-selected");
+		 	$(this).children('td:first-child').find('input').removeAttr('checked');
+	    	return false;
+		}else{
+			$(this).addClass("datagrid-row-selected");
+	    	$(this).children('td:first-child').find('input').prop('checked','checked');
+	    	return false;
+		}
+	})
+	//刷新
+	$(".shuaxin>a").click(function() {
+		var code = "{$sit}";
+    	var href = $("#"+code).attr("src");
+		$.post(
+			href+"?sit="+code,
+			{page:1},
+			function(data){
+				$("#"+code).html(data);
+			},"html"
+		)
+	})
+	//审核
+	/*$(function(){
+		var options = $('#finder-{$_request->controller()}').{$_finder}("options");
+		$.extend(true,options,defaults);
+		
+		$("#toolbar-{$_request->controller()} .verify").click(function(){
+			var nodes = $('#finder-{$_request->controller()}').{$_finder}('getChecked');
+			if (nodes.length == 0) {
+				layer.msg('对不起，您未勾选任何记录！', {shift: 1});
+				return false;
+			}
+
+			var id = [];
+			$(nodes).each(function(i) {
+				id[i] = nodes[i]['id'];
+			});
+			var value = $(this).attr('rel');
+			$.post('{:url("admin/module/verify")}', {id:id, status: value}, function (data){
+				if (data.code) {
+					layer.msg(data.msg);
+					//layer.alert(data.msg, {icon: 1});
+					$('#finder-{$_request->controller()}').{$_finder}("reload");
+					$('#finder-{$_request->controller()}').{$_finder}("clearChecked");
+				}else{
+					layer.alert(data.msg, {icon: 5});
+				}
+			}, 'json');
+			return false;
+		});
+	});*/
+	//新增
+	$(".add-btn-{$sit}").click(function() {
+		//Ajax获取
+		$.post('{:url("admin/".$sit."/create")."?sit=".$sit}',function(str){
+		  {$sit}_create=layer.open({
+		    type: 1,
+		    title: "新增{$title}",
+		    shade: 0,
+		    moveOut:true,
+		    //shade :false,
+		    area: [window_w, "70%"],
+		    maxmin: true,
+		    content: str, //注意，如果str是object，那么需要字符拼接。
+		    success: function(layero, index){
+			    //alert();
+			  },
+		   end: function(layero, index){
+		    },
+
+		  });
+		});
+		//弹出即全屏
+		/* var index = layer.open({
+			title: '新增',
+			type: 1,
+			content: '{:url("admin/module/create")}',
+			area: ['600px', '700px'],
+			maxmin: true
+		}); 
+		return false;*/
+	});
+	//回收站
+	$(".recycle-btn-{$sit}").click(function() {
+		//Ajax获取
+		$.post('{:url("admin/".$sit."/recycle")."?sit=".$sit}',function(str){
+		  {$sit}_recycle=layer.open({
+		    type: 1,
+		    title: "{$title}-回收站",
+		    shade: 0,
+		    moveOut:true,
+		    //shade :false,
+		    area: [window_rw, window_rh],
+		    maxmin: true,
+		    content: str, //注意，如果str是object，那么需要字符拼接。
+		    success: function(layero, index){
+			    //alert();
+			  },
+		   end: function(layero, index){
+		    },
+
+		  });
+		});
+		//弹出即全屏
+		/* var index = layer.open({
+			title: '新增',
+			type: 1,
+			content: '{:url("admin/module/create")}',
+			area: ['600px', '700px'],
+			maxmin: true
+		}); */
+		return false;
+	});
+	//删除
+	$(".delete-btn-{$sit}").click(function(){	
+		var id = new Array();
+
+		$(".datagrid-row-selected.data-list-{$sit}").each(function(i){
+			//alert(i);
+			id[i] = $(this).find("input").val();
+		})
+		if (id.length == 0) {
+			layer.msg('对不起，您未勾选任何记录！', {shift: 1});
+			return false;
+		}
+		var length = id.length;
+		recycle = 0;
+		var msg = "";
+		{if condition="$_recycle eq true"}
+			msg = "确定将这"+length+"条数据放入回收站？";
+			recycle = 1;
+		{else /}
+			msg = "删除无法恢复！确认删除这"+length+"条数据？";
+		{/if}
+		if(length==1){length="";}
+		layer.open({
+		  content: msg
+		  ,btn: ['确认', '取消']
+		  ,btnAlign: 'c'
+		  ,yes: function(index, layero){
+		    $.post('{:url("admin/".$sit."/delete")}', {id:id,recycle:recycle}, function (data){
+				if (data.code) {
+					layer.msg(data.msg);
+					var code = "{$sit}";
+			    	var href = $("#"+code).attr("src");
+	    			$.post(
+						href+"?sit="+code,
+						{page:1},
+						function(data){
+							$("#"+code).html(data);
+						},"html"
+					)
+				}else{
+					layer.alert(data.msg, {icon: 5});
+				}
+			}, 'json');
+		  }
+		});
+		return false;
+	});
+})
+/******************************************************************************************/
+/**
+ * 当用户点击一行时触发，参数包括：
+ *rowIndex：被点击行的索引，从 0 开始
+ *rowData：被点击行对应的记录
+ */
+function onClickRow(rowIndex,rowData){}
+
+/**
+ *当用户双击一行时触发，参数包括：
+ *rowIndex：被双击行的索引，从 0 开始
+ *rowData：被双击行对应的记录
+ */
+function onDblClickRow(rowIndex,rowData){}
+
+/**
+ *当用户单击一个单元格时触发，参数包括：
+ *rowIndex, field, value
+ */
+function onClickCell(rowIndex, field, value){}
+
+/**
+ *当用户双击一个单元格时触发。，参数包括：
+ *rowIndex, field, value
+ */
+function onDblClickCell(rowIndex, field, value){}
+
+/**
+ *当用户选中一行时触发，参数包括：
+ *rowIndex, rowData
+ */
+function onSelect(rowIndex, rowData){}
+
+/**
+ *当用户取消选中一行时触发，参数包括：
+ *rowIndex, rowData
+ */
+function onUnselect(rowIndex, rowData){}
+
+/**
+ *当用户选中全部行时触发，参数包括：
+ *row
+ */
+function onSelectAll(row){}
+
+/**
+ *当用户取消选中全部行时触发，参数包括：
+ *row
+ */
+function onUnselectAll(row){}
+
+/**
+ *当用户勾选一行时触发，参数包括：
+ *row
+ */
+function onCheck(rowIndex,rowData){}
+
+/**
+ *当用户取消勾选一行时触发，参数包括：
+ *row
+ */
+function onUncheck(rowIndex,rowData){}
+
+/**
+ *当用户勾选全部行时触发。该事件自版本 1.3 起可用。
+ *row
+ */
+function onCheckAll(row){}
+
+/**
+ *当用户取消勾选全部行时触发。该事件自版本 1.3 起可用。
+ *row
+ */
+function onUncheckAll(row){}
+
+/**
+ *当用户开始编辑一行时触发，参数包括：
+ rowIndex：编辑行的索引，从 0 开始
+ rowData：编辑行对应的记录
+ *row
+ */
+function onBeforeEdit(rowIndex, rowData){}
+
+/**
+ *当用户完成编辑一行时触发，参数包括：
+ rowIndex：编辑行的索引，从 0 开始
+ rowData：编辑行对应的记录
+ changes：更改的字段/值对
+ *row
+ */
+function onAfterEdit(rowIndex, rowData, changes){}
+
+/**
+ *当用户取消编辑一行时触发，参数包括：
+ rowIndex：编辑行的索引，从 0 开始
+ rowData：编辑行对应的记录
+ *row
+ */
+function onCancelEdit(rowIndex, rowData){}
+
+/**
+ *当右键点击行时触发。
+ *row
+ */
+function onRowContextMenu(e, rowIndex, rowData){}
+});
+</script>
+{block name="endjs"}{/block}

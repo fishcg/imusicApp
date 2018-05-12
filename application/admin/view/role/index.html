@@ -1,0 +1,80 @@
+{extend name="_layouts/finder_layout" /}
+
+{block name="title"}{/block}
+
+{block name="css"}
+
+{/block}
+
+{block name="js"}{/block}
+
+{block name="body_class"}{/block}
+
+{block name="content"}
+<section class="layui-larry-box">
+	<div class="larry-personal">
+	    <div class="layui-tab">
+             <!-- anniu-->
+            <div class="larry-separate"></div>
+		         <!-- 操作日志 -->
+                <div class="layui-tab-item layui-field-box layui-show">
+                     <table id="data-title" class="layui-table table-hover" lay-even="" lay-skin="nob">
+                          <thead>
+                              <tr>
+                                  <th><input name="{$sit}-all" type="checkbox" id="{$sit}-selected-all"></th>
+                                  <th>ID</th>
+                                  <th>名字</th>
+                                  <th>识别码</th>
+                                  <th>所属系统</th>
+                                  <th>排序</th>
+                              </tr>
+                          </thead>
+                          <tbody id="getlist" class="ajax-{$sit}">
+                            <!-- 异步的内容 -->
+                          </tbody>
+                     </table>
+                     <div class="larry-table-page shuaxin">
+                          <a href="javascript:;" class="layui-btn layui-btn-small"><i class="iconfont icon-shuaxin"></i>刷新</a>
+				          <div id="page-{$sit}" class="page"></div>
+			         </div>
+			    </div>
+		</div>
+	</div>
+</section>
+{/block}
+
+{block name="endjs"}
+<script type="text/javascript">
+	layui.use(['jquery','layer','element','laypage'],function(){
+	      window.jQuery = window.$ = layui.jquery;
+	      window.layer = layui.layer;
+          var element = layui.element();
+          laypage = layui.laypage;
+            
+          laypage({
+          	       //curr:2,
+					cont: 'page-{$sit}',
+					pages: {$count} //总页数
+						,
+					groups: 5 //连续显示分页数
+						,
+					jump: function(obj, first) {
+						//得到了当前页，用于向服务端请求对应数据
+						var curr = obj.curr;
+						$.post(
+							'{:url("admin/".$sit."/datalist")}',
+							{sit:"{$sit}",page:curr},
+							function(data){					
+								$(".ajax-{$sit}").html(data);
+							},"html"
+						)
+						$('#{$sit}-selected-all').removeAttr('checked').removeClass("all");
+						//alert(obj.curr);
+						if(!first) {
+							//layer.msg('第 '+ obj.curr +' 页');
+						}
+					}
+				});
+    });
+</script>
+{/block}

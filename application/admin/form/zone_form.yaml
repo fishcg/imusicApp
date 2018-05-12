@@ -1,0 +1,52 @@
+# ~form 开头的内容用于指定表单属性
+~form:
+  _subject: "地区"
+  _tips: true
+  _submit: "保存"
+  class: "smart-form"
+
+# 指定字段及过滤器等信息
+
+id:
+  _ui: hidden
+  _filters: ['trim']
+  _label: "ID"
+  _req: true
+
+status:
+  _label: "状态"
+  _ui: radiogroup
+  _req: true
+  value: 1
+  items:
+    0 : 禁止
+    1 : 启用
+
+parent_id:
+  _ui: combotree
+  _label: "上级地区"
+  _req: false
+  url: zone/ajaxGetTree
+  require: false
+  value: ''
+
+name:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "名称"
+  _req: true
+  size: 50
+
+alpha:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "首字母"
+  _req: true
+
+sort:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "显示顺序"
+  _req: true
+  _width: 100
+  value: 50

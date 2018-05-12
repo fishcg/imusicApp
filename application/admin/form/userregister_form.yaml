@@ -1,0 +1,46 @@
+~form:
+  _subject: "注册新用户"
+  _tips: true
+  _reset: true
+  _cancel_url: javascript:history.go(-1)
+  _submit: true
+
+# 指定字段及过滤器等信息
+
+username:
+  _ui: textbox
+  _filters: ['trim', 'strtolower']
+  _label: "用户帐号"
+  _req: true
+  onBlur: "checkusername();"
+  class: "easyui-validatebox"
+  data-options: "required:true"
+
+password:
+  _ui: password
+  _label: "输入密码"
+  _req: true
+  class: "easyui-validatebox"
+  data-options: "required:true"
+
+password2:
+  _ui: password
+  _label: "核对密码"
+  _req: true
+  class: "easyui-validatebox"
+  data-options: "required:true"
+
+email:
+  _ui: textbox
+  _label: "电子邮箱"
+  _req: true
+  class: "easyui-validatebox"
+  data-options: "required:true, validType:'email'"
+
+imgcode_register:
+  _ui: imgcode
+  _label: "验  证  码"
+  _req: true
+  size: 6
+  class: "easyui-validatebox"
+  data-options: "required:true"

@@ -1,0 +1,85 @@
+# ~form 开头的内容用于指定表单属性
+~form:
+  _subject: "用户"
+  _tips: true
+  _submit: "保存"
+  class: "smart-form"
+
+# 指定字段及过滤器等信息
+
+id:
+  _ui: hidden
+  _label: "id"
+  
+post_key:
+  _ui: hidden
+  _label: "post_key"
+
+uid:
+  _label: "申请人"
+  _ui: hidden
+    
+update_uid:
+  _ui: hidden
+  _label: "update_uid"
+
+verify_uid:
+  _ui: hidden
+  _label: "verify_uid"
+
+company:
+  _ui: textbox
+  _label: '企业名称'
+  _filters: ['trim']
+  style: 'width:200px;'
+
+legal_person:
+  _ui: textbox
+  _label: '法人姓名'
+  _filters: ['trim']
+  style: 'width:200px;'
+ 
+legal_idcard_no:
+  _ui: textbox
+  _label: '法人身份证号码'
+  _filters: ['trim']
+  style: 'width:200px;'
+ 
+legal_idcard1:
+  _ui: kupload
+  _filters: ['trim']
+  _label: "法人身份证照片"
+  size: 50
+  style: 'double'
+  type: 'image'
+  manager: true
+  multi: false
+  model: 'Vipapply'
+  field: 'legal_idcard_photo'
+  replace: true
+  
+legal_idcard2:
+  _ui: kupload
+  _filters: ['trim']
+  _label: "法人身份证照片"
+  size: 50
+  style: 'double'
+  type: 'image'
+  manager: true
+  multi: false
+  model: 'Vipapply'
+  field: 'legal_idcard_photo'
+  replace: true
+
+legal_tel:
+  _ui: textbox
+  _label: '法人联系方式'
+  _filters: ['trim']
+  style: 'width:200px;'
+
+indate:
+  _ui: datetime
+  _label: '有效期'
+  _filters: ['trim']
+  style: 'width:200px;'
+  value: 0

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<title>网易网易</title>
+</head>
+<body>
+啊实打实大苏打
+<script src="__STATIC__/music/jquery.min.js"></script>
+<script src="__STATIC__/music/crypto-js.js"></script>
+<script src="__STATIC__/music/rsa.js"></script>
+
+<script type="text/javascript">
+
+var object = {
+    ids: [26620105],
+    br: 128000,
+    csrf_token: ''  
+}
+
+var obj = rsa(object);
+
+$.post(
+    //"http://music.163.com/weapi/song/enhance/player/url?csrf_token=",
+    '{:url("wap/index/getmusic")}',
+   { params: obj.encText,encSecKey: obj.encSecKey}, function(data){
+    console.log(data);
+});
+</script>
+</body>
+</html>

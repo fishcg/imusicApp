@@ -1,0 +1,132 @@
+~form:
+  _subject: "用户信息"
+  _tips: true
+  _submit: "保存"
+  class: "smart-form"
+
+# 指定字段及过滤器等信息
+
+uid:
+  _ui: hidden
+  _filters: ['trim']
+  _label: "用户ID"
+
+post_key:
+  _ui: hidden
+  _filters: ['trim']
+  _label: "post_key"
+
+name:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "姓名"
+
+idcard:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "身份证"
+  
+gender:
+  _ui: radiogroup
+  _label: "性别"
+  value: 1
+  items:
+    0: '女'
+    1: '男'
+
+birthday:
+  _ui:  date
+  _label: 生日
+
+native:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "籍贯"
+  
+nation:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "民族"
+  
+avatar:
+  _ui: kupload
+  _filters: ['trim']
+  _label: "头像"
+  size: 50
+  style: 'double'
+  type: 'image'
+  manager: true
+  multi: false
+  model: 'Userinfo'
+  field: 'avatar'
+  replace: true
+
+address:
+  _ui: memo
+  _filters: ['trim']
+  _label: "详细住址"
+
+qq:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "QQ"
+
+alipay:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "支付宝"
+  
+mobile:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "手机号码"
+   
+email:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "邮箱"
+  
+education:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "学历"
+  
+introduce:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "简介"
+  
+birthplace:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "出生地"
+  
+political:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "政治面貌"
+    
+degree:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "学位"
+  
+school:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "毕业学校"
+  
+speciality:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "专业"
+  
+postcode:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "邮编"
+
+age:
+  _ui: textbox
+  _filters: ['trim']
+  _label: "年龄"

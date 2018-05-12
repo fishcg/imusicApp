@@ -1,0 +1,12 @@
+.idea
+composer.lock
+*.log
+application/config/params.php
+application/config/service.php
+application/constants/key.php
+application/config.php
+application/database.php
+runtime
+public/images
+public/lrc
+public/resources

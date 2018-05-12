@@ -1,0 +1,29 @@
+# ~form 开头的内容用于指定表单属性
+~form:
+  _subject: "用户登陆"
+  _tips: true
+  _submit: "登陆"
+  #_cancel: true
+  
+# 指定字段及过滤器等信息
+username:
+  _ui: textbox
+  _filters: ['trim', 'strtolower']
+  _req: false
+  class: "ipt"
+  placeholder: "用户名"
+  data-options: "required:true"
+  
+password:
+  _ui: password
+  _req: false
+  class: "ipt"
+  placeholder: "密码"
+  data-options: "required:true"
+  
+imgcode_login:
+  _ui: imgcode2
+  _req: false
+  class: "ipt1"
+  placeholder: "验证码"
+  data-options: "required:true"
