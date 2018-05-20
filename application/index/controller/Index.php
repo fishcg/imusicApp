@@ -10,30 +10,17 @@ class Index extends Controller
     {
         $id = $_GET['id'] ?? 0;
 
-
-        dump($this->getRandElements(1, 30, 4));
-
-
-
-
-
-
-
-
-
-
-
-
-      exit();
-      $this->assign('id', $id);  
-      /*$ch = curl_init();
-      curl_setopt($ch, CURLOPT_URL, $url);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-      curl_setopt($ch, CURLOPT_HEADER, 0);
-      $output = curl_exec($ch);
-      curl_close($ch);
-      echo $output;*/
+        echo 'This severs is running！';
+        exit();
+        $this->assign('id', $id);
+          /*$ch = curl_init();
+          curl_setopt($ch, CURLOPT_URL, $url);
+          curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+          curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
+          curl_setopt($ch, CURLOPT_HEADER, 0);
+          $output = curl_exec($ch);
+          curl_close($ch);
+          echo $output;*/
       return view();
     }
 
