@@ -1,0 +1,26 @@
+{
+  "name": "acgay",
+  "version": "1.0.0",
+  "description": "node tools",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "gulp": "cd node-tools/gulp && gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fishcg/imusicApp.git"
+  },
+  "author": "fish",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fishcg/imusicApp/issues"
+  },
+  "homepage": "https://github.com/fishcg/imusicApp#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-uglify": "^3.0.0"
+  },
+  "dependencies": {
+  }
+}

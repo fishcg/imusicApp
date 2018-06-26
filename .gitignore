@@ -10,3 +10,4 @@ runtime/*
 public/images
 public/lrc
 public/resources
+node_modules/*
